@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Investment App</title>
+  </head>
+  <body>
+    <div class="investment-app-container">
+      <label for="strategy">Select your strategy</label>
+      <select id="strategy">
+        <option value="custom">Custom</option>
+        <option value="defensive">Defensive</option>
+        <option value="balanced">Balanced</option>
+        <option value="offensive">Offensive</option>
+      </select>
+
+      <!-- USER INVESTMENT-->
+      <div class="user-investment">
+        <label for="total-euros">Total to invest (€))</label>
+        <input type="number" class="euros" id="total-euros" />
+      </div>
+
+      <!--REMAINING INVESTMENT-->
+      <div class="remain-investment">
+        <label for="remain-euros">Total remaining (€))</label>
+        <input type="number" class="euros" id="remain-euros" readonly />
+        <label for="remain-percents">Total remaining (%)</label>
+        <input type="number" class="percents" id="remain-percents" readonly />
+      </div>
+
+      <!---- INVESTMENT ALLOCATION ---->
+      <div class="investment-allocation">
+        <!-- EUROS FUND -->
+        <div class="euros-fund">
+          <label for="euros-fund-euros">Euros Fund (€)</label>
+          <input type="number" class="euros" id="euros-fund-euros" />
+          <label for="euros-fund-percents">Euros Fund (%)</label>
+          <input type="number" class="percents" id="euros-fund-percents" />
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+          <label for="actions-euros">Actions (€)</label>
+          <input type="number" class="euros" id="actions-euros" />
+          <label for="actions-percents">Actions (%)</label>
+          <input type="number" class="percents" id="actions-percents" />
+        </div>
+
+        <!-- REAL ESTATE -->
+        <div class="real-estate">
+          <label for="real-estate-euros">Real Estate (€)</label>
+          <input type="number" class="euros" id="real-estate-euros" />
+          <label for="real-estate-percents">Real Estate (%)</label>
+          <input type="number" class="percents" id="real-estate-percents" />
+        </div>
+
+        <!-- EXOTIC -->
+        <div class="exotic">
+          <label for="exotic-euros">Exotic (€)</label>
+          <input type="number" class="euros" id="exotic-euros" />
+          <label for="exotic-percents">Exotic (%)</label>
+          <input type="number" class="percents" id="exotic-percents" />
+        </div>
+      </div>
+    </div>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
