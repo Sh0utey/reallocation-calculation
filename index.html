@@ -4,68 +4,65 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Investment App</title>
+    <title>Reallocation Calculation</title>
   </head>
   <body>
-    <div class="investment-app-container">
-      <label for="strategy">Select your strategy</label>
-      <select id="strategy">
-        <option value="custom">Custom</option>
-        <option value="defensive">Defensive</option>
-        <option value="balanced">Balanced</option>
-        <option value="offensive">Offensive</option>
-      </select>
-
-      <!-- USER INVESTMENT-->
-      <div class="user-investment">
-        <label for="total-euros">Total to invest (€))</label>
-        <input type="number" class="euros" id="total-euros" />
+    <div class="current-allocation-container">
+      <div class="current-euros-funds">
+        <label for="current-euros-funds-in-euros">Fonds euros (€)</label>
+        <input type="number" id="current-euros-funds-in-euros" min="0"/>
+        <label for="current-euros-funds-in-percentages">Fonds euros (%)</label>
+        <input type="number" id="current-euros-funds-in-percentages" min="0" max="100" readonly />
       </div>
-
-      <!--REMAINING INVESTMENT-->
-      <div class="remain-investment">
-        <label for="remain-euros">Total remaining (€))</label>
-        <input type="number" class="euros" id="remain-euros" readonly />
-        <label for="remain-percents">Total remaining (%)</label>
-        <input type="number" class="percents" id="remain-percents" readonly />
+      <div class="current-actions-container">
+        <label for="current-actions-in-euros">Actions (€)</label>
+        <input type="number" id="current-actions-in-euros" min="0"/>
+        <label for="current-actions-in-percentages">Actions (%)</label>
+        <input type="number" id="current-actions-in-percentages" min="0" max="100" readonly />
       </div>
-
-      <!---- INVESTMENT ALLOCATION ---->
-      <div class="investment-allocation">
-        <!-- EUROS FUND -->
-        <div class="euros-fund">
-          <label for="euros-fund-euros">Euros Fund (€)</label>
-          <input type="number" class="euros" id="euros-fund-euros" />
-          <label for="euros-fund-percents">Euros Fund (%)</label>
-          <input type="number" class="percents" id="euros-fund-percents" />
-        </div>
-
-        <!-- ACTIONS -->
-        <div class="actions">
-          <label for="actions-euros">Actions (€)</label>
-          <input type="number" class="euros" id="actions-euros" />
-          <label for="actions-percents">Actions (%)</label>
-          <input type="number" class="percents" id="actions-percents" />
-        </div>
-
-        <!-- REAL ESTATE -->
-        <div class="real-estate">
-          <label for="real-estate-euros">Real Estate (€)</label>
-          <input type="number" class="euros" id="real-estate-euros" />
-          <label for="real-estate-percents">Real Estate (%)</label>
-          <input type="number" class="percents" id="real-estate-percents" />
-        </div>
-
-        <!-- EXOTIC -->
-        <div class="exotic">
-          <label for="exotic-euros">Exotic (€)</label>
-          <input type="number" class="euros" id="exotic-euros" />
-          <label for="exotic-percents">Exotic (%)</label>
-          <input type="number" class="percents" id="exotic-percents" />
-        </div>
+      <div class="current-real-estate-container">
+        <label for="current-real-estate-in-euros">Immobilier (€)</label>
+        <input type="number" id="current-real-estate-in-euros" min="0"/>
+        <label for="current-real-estate-in-percentages">Immobilier (%)</label>
+        <input type="number" id="current-real-estate-in-percentages" min="0" max="100" readonly />
+      </div>
+      <div class="current-exotic-container">
+        <label for="current-exotic-in-euros">Exotique (€)</label>
+        <input type="number" id="current-exotic-in-euros" min="0"/>
+        <label for="current-exotic-in-percentages">Exotique (%)</label>
+        <input type="number" id="current-exotic-in-percentages" min="0" max="100" readonly />
       </div>
     </div>
+
+    <div class="ideal-allocation-container">
+      <div class="ideal-euros-funds">
+        <label for="ideal-euros-funds-in-euros">Fonds euros (€)</label>
+        <input type="number" id="ideal-euros-funds-in-euros" readonly />
+        <label for="ideal-euros-funds-in-percentages">Fonds euros (%)</label>
+        <input type="number" id="ideal-euros-funds-in-percentages" min="0" max="100"/>
+      </div>
+      <div class="ideal-actions-container">
+        <label for="ideal-actions-in-euros">Actions (€)</label>
+        <input type="number" id="ideal-actions-in-euros" readonly />
+        <label for="ideal-actions-in-percentages">Actions (%)</label>
+        <input type="number" id="ideal-actions-in-percentages" min="0" max="100"/>
+      </div>
+      <div class="ideal-real-estate-container">
+        <label for="ideal-real-estate-in-euros">Immobilier (€)</label>
+        <input type="number" id="ideal-real-estate-in-euros" readonly />
+        <label for="ideal-real-estate-in-percentages">Immobilier (%)</label>
+        <input type="number" id="ideal-real-estate-in-percentages" min="0" max="100"/>
+      </div>
+      <div class="ideal-exotic-container">
+        <label for="ideal-exotic-in-euros">Exotique (€)</label>
+        <input type="number" id="ideal-exotic-in-euros" readonly />
+        <label for="ideal-exotic-in-percentages">Exotique (%)</label>
+        <input type="number" id="ideal-exotic-in-percentages" min="0" max="100"/>
+      </div>
+    </div>
+
+    <label for="allowed-fluctuation">Fluctuation autorisée</label>
+    <input type="number" id="allowed-fluctuation" min="0"/>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>

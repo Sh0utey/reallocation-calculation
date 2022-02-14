@@ -1,137 +1,89 @@
-const allInputs = document.querySelectorAll("input");
-const eurosInputs = document.querySelectorAll("input.euros");
-const remainEurosDisplay = document.getElementById("remain-euros");
-const eurosFundEurosDisplay = document.getElementById("euros-fund-euros");
-const actionsEurosDisplay = document.getElementById("actions-euros");
-const realEstateEurosDisplay = document.getElementById("real-estate-euros");
-const exoticEurosDisplay = document.getElementById("exotic-euros");
-const percentsInputs = document.querySelectorAll("input.percents");
-const remainPercentsDisplay = document.getElementById("remain-percents");
-const eurosFundPercentsDisplay = document.getElementById("euros-fund-percents");
-const actionsPercentsDisplay = document.getElementById("actions-percents");
-const realEstatePercentsDisplay = document.getElementById(
-  "real-estate-percents"
-);
-const exoticPercentsDisplay = document.getElementById("exotic-percents");
-const strategy = document.getElementById("strategy");
-let totalEurosInput = 0;
-let eurosFundEurosInput = 0;
-let actionsEurosInput = 0;
-let realEstateEurosInput = 0;
-let exoticEurosInput = 0;
-let eurosFundPercentsInput = 0;
-let actionsPercentsInput = 0;
-let realEstatePercentsInput = 0;
-let exoticPercentsInput = 0;
+const inputs = document.querySelectorAll("input")
+const currentAllocation = {}
+const idealAllocation = {}
+const allocationsDifferece = {}
 
-const eurosToPercents = () => {
-  eurosInputs.forEach((eurosInput) => {
-    switch (eurosInput.id) {
-      case "total-euros":
-        totalEurosInput = eurosInput.value;
-        break;
-      case "euros-fund-euros":
-        eurosFundEurosInput = eurosInput.value;
-        eurosFundPercentsInput = (eurosFundEurosInput / totalEurosInput) * 100;
-        eurosFundPercentsDisplay.value = eurosFundPercentsInput;
-        break;
-      case "actions-euros":
-        actionsEurosInput = eurosInput.value;
-        actionsPercentsInput = (actionsEurosInput / totalEurosInput) * 100;
-        actionsPercentsDisplay.value = actionsPercentsInput;
-        break;
-      case "real-estate-euros":
-        realEstateEurosInput = eurosInput.value;
-        realEstatePercentsInput =
-          (realEstateEurosInput / totalEurosInput) * 100;
-        realEstatePercentsDisplay.value = realEstatePercentsInput;
-        break;
-      case "exotic-euros":
-        exoticEurosInput = eurosInput.value;
-        exoticPercentsInput = (exoticEurosInput / totalEurosInput) * 100;
-        exoticPercentsDisplay.value = exoticPercentsInput;
-        break;
-      default:
-        null;
-    }
-  });
-};
-const percentToEuros = () => {
-  percentsInputs.forEach((percentsInput) => {
-    switch (percentsInput.id) {
-      case "euros-fund-percents":
-        eurosFundPercentsInput = percentsInput.value;
-        eurosFundEurosInput = (eurosFundPercentsInput * totalEurosInput) / 100;
-        eurosFundEurosDisplay.value = eurosFundEurosInput;
-        break;
-      case "actions-percents":
-        actionsPercentsInput = percentsInput.value;
-        actionsEurosInput = (actionsPercentsInput * totalEurosInput) / 100;
-        actionsEurosDisplay.value = actionsEurosInput;
-        break;
-      case "real-estate-percents":
-        realEstatePercentsInput = percentsInput.value;
-        realEstateEurosInput =
-          (realEstatePercentsInput * totalEurosInput) / 100;
-        realEstateEurosDisplay.value = realEstateEurosInput;
-        break;
-      case "exotic-percents":
-        exoticPercentsInput = percentsInput.value;
-        exoticEurosInput = (exoticPercentsInput * totalEurosInput) / 100;
-        exoticEurosDisplay.value = exoticEurosInput;
-        break;
-      default:
-        null;
-    }
-  });
-};
+/*-------------------------FUNCTIONS-------------------------*/
 
-allInputs.forEach((input) => {
-  input.addEventListener("input", () => {
-    if (input.className === "euros" && strategy.value === "custom") {
-      eurosToPercents();
-    } else if (input.className === "percents" && strategy.value === "custom") {
-      percentToEuros();
-    }
-    remainEurosDisplay.value =
-      totalEurosInput -
-      eurosFundEurosInput -
-      actionsEurosInput -
-      realEstateEurosInput -
-      exoticEurosInput;
-    remainPercentsDisplay.value =
-      100 -
-      eurosFundPercentsInput -
-      actionsPercentsInput -
-      realEstatePercentsInput -
-      exoticPercentsInput;
-  });
-});
+/**
+ * @param {HTMLElement} input - input name
+ * @returns {number} - value (in € or %)
+ */
+const parseFloatValue = input => parseFloat(input)
 
-strategy.addEventListener("input", () => {
-  if (strategy.value === "defensive") {
-    console.log("defensive");
-    eurosFundPercentsInput = 100;
-    actionsPercentsInput = 0;
-    realEstatePercentsInput = 0;
-    exoticPercentsInput = 0;
-  } else if (strategy.value === "balanced") {
-    console.log("balanced");
-    eurosFundPercentsInput = 45;
-    actionsPercentsInput = 25;
-    realEstatePercentsInput = 25;
-    exoticPercentsInput = 5;
-  } else if (strategy.value === "offensive") {
-    console.log("offensive");
-    eurosFundPercentsInput = 20;
-    actionsPercentsInput = 65;
-    realEstatePercentsInput = 10;
-    exoticPercentsInput = 5;
-  } else {
-    console.log("do math");
-    eurosFundPercentsInput = eurosFundPercentsDisplay.value;
-    actionsPercentsInput = actionsPercentsDisplay.value;
-    realEstatePercentsInput = realEstatePercentsDisplay.value;
-    exoticPercentsInput = exoticPercentsDisplay.value;
+
+/**
+ * Set assets properties of allocations Objects
+ * @param {Object} allocation - allocation name
+ * @param {string} asset - asset name
+ * @param {HTMLElement} input - input name
+ */
+const setUserAllocations = (allocation, asset, input) => {
+    allocation[asset] = parseFloatValue(input)
+}
+
+/**
+ * 
+ * @param {string} asset - asset name
+ */
+const convertUserAllocations = (asset) => {
+  currentAllocation[asset+'InPercentages'] = (currentAllocation[asset+'InEuros'] / currentAllocation.total) * 100
+  idealAllocation[asset+'InEuros'] = (idealAllocation[asset+'InPercentages'] / 100) * currentAllocation.total
+}
+
+const getUserAllocations = () => {
+
+  const currentEurosFunds = document.getElementById("current-euros-funds-in-euros")
+  const currentActions = document.getElementById("current-actions-in-euros")
+  const currentRealEstate = document.getElementById("current-real-estate-in-euros")
+  const currentExotic = document.getElementById("current-exotic-in-euros")
+  const idealEurosFunds = document.getElementById("ideal-euros-funds-in-percentages")
+  const idealActions = document.getElementById("ideal-actions-in-percentages")
+  const idealRealEstate = document.getElementById("ideal-real-estate-in-percentages")
+  const idealExotic = document.getElementById("ideal-exotic-in-percentages")
+  const allowedFluctuation = document.getElementById('allowed-fluctuation')
+
+  const allocations = [currentAllocation, idealAllocation]
+  const assets = ['eurosFunds', 'actions', 'realEstate','exotic']
+
+  const assetsValues = {
+    currenteurosFunds: currentEurosFunds.value,
+    currentactions: currentActions.value,
+    currentrealEstate: currentRealEstate.value,
+    currentexotic: currentExotic.value,
+    idealeurosFunds: idealEurosFunds.value,
+    idealactions: idealActions.value,
+    idealrealEstate: idealRealEstate.value,
+    idealexotic: idealExotic.value
   }
-});
+
+
+  for (const allocation of allocations) {
+    for (const asset of assets) {
+        if (allocation === currentAllocation) {
+        setUserAllocations(allocation, asset+'InEuros', assetsValues['current'+asset])
+      } else {
+        setUserAllocations(allocation,asset+'InPercentages', assetsValues['ideal'+asset])
+        setUserAllocations(allocation, 'allowedFluctuation', allowedFluctuation.value)
+      }
+    } 
+  }
+
+  currentAllocation.total = 
+  currentAllocation.eurosFundsInEuros + currentAllocation.actionsInEuros + currentAllocation.realEstateInEuros + currentAllocation.exoticInEuros
+
+  for(const asset of assets) {
+    convertUserAllocations(asset)
+  }
+}
+
+/*-------------------------EVENT LISTENERS-------------------------*/
+
+ for(const input of inputs) {
+  input.value = '0'
+  input.addEventListener("input", () => {
+    getUserAllocations()
+    console.log('currentAllocation', currentAllocation)
+    console.log('idealAllocation',idealAllocation)
+  })
+}
